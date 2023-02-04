@@ -3,8 +3,8 @@ package com.doganesad;
 import androidx.annotation.NonNull;
 
 public class Music {
-    String songName,artistName,musicUrl,coverUrl;
-    int musicId;
+   private String songName,artistName,musicUrl,coverUrl;
+    private int musicId;
 
     public Music(String songName, String artistName, String musicUrl, String coverUrl, int musicId) {
         this.songName = songName;

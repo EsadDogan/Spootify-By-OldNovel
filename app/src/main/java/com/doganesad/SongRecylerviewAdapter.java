@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import kotlin.text.UStringsKt;
 
@@ -30,7 +31,10 @@ public class SongRecylerviewAdapter extends RecyclerView.Adapter<SongRecylerview
     public final static String TAG = "adapter";
     Context context;
     ArrayList<Music> music;
-    public static String itemId;
+    public static int currentMusicPosition;
+
+
+
 
     public SongRecylerviewAdapter(Context context, ArrayList<Music> music) {
         this.context = context;
@@ -56,7 +60,7 @@ public class SongRecylerviewAdapter extends RecyclerView.Adapter<SongRecylerview
         holder.txtSongName.setText(music.get(position).getSongName());
         holder.txtArtistName.setText(music.get(position).getArtistName());
         Glide.with(context).load(music.get(position).getcoverUrl()).into(holder.imageView);
-        if (music.get(position).getMusicId() == 0){
+        if (music.get(position).getMusicId() == -1){
             holder.btnLike.setVisibility(View.GONE);
         }
 
@@ -67,8 +71,10 @@ public class SongRecylerviewAdapter extends RecyclerView.Adapter<SongRecylerview
                 try {
                     showMustGoOn(music.get(holder.getAdapterPosition()).getMusicUrl());
                     MainActivity.setCards(music.get(holder.getAdapterPosition()));
-                    Glide.with(view).load(music.get(holder.getAdapterPosition()).getcoverUrl()).into(MainActivity.imageViewBC);
-                    Glide.with(view).load(music.get(holder.getAdapterPosition()).getcoverUrl()).into(MainActivity.imageViewLC);
+                    currentMusicPosition = holder.getAdapterPosition();
+                    MainActivity.updateSeekBar();
+                    // Glide.with(view).load(music.get(holder.getAdapterPosition()).getcoverUrl()).into(MainActivity.imageViewBC);
+                    // Glide.with(view).load(music.get(holder.getAdapterPosition()).getcoverUrl()).into(MainActivity.imageViewLC);
                    // holder.txtSongName.setTextColor(Color.GREEN);
 
                 }catch (Exception e){
@@ -151,6 +157,26 @@ public class SongRecylerviewAdapter extends RecyclerView.Adapter<SongRecylerview
 
     }
 
-
+//    public static void updateMusicStatus(ArrayList<Music> musics,Music newCurrentMusic){
+//
+//        try {
+//            for (Music music: musics) {
+//
+//                if (Objects.equals(music.getMusicUrl(), newCurrentMusic.getMusicUrl())){
+//
+//                    currentMusic = newCurrentMusic;
+//                    nextMusic = musics.get(musics.indexOf(newCurrentMusic)+1);
+//                    previousMusic = musics.get(musics.indexOf(newCurrentMusic)-1);
+//
+//                }
+//
+//            }
+//        }catch (Exception e){
+//            Log.d(TAG, "updateMusicStatus: error" +e.getMessage());
+//        }
+//
+//
+//
+//    }
 
 }

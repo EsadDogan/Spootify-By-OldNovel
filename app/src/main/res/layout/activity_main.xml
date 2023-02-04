@@ -87,7 +87,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/pause_icon"
+                android:background="@drawable/pausearrowbtn"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -159,13 +159,14 @@
                 android:id="@+id/txtSongNameBigCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="4dp"
                 android:text="Song Name"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toTopOf="@+id/txtArtistNameBigCard"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.11"
+                app:layout_constraintHorizontal_bias="0.041"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
@@ -184,12 +185,13 @@
                 android:id="@+id/txtArtistNameBigCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:layout_marginBottom="20dp"
                 android:text="Artist Name"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.092"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -223,18 +225,19 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="13dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/pausecircle_icon"
+                android:background="@drawable/circlepausebutton"
                 app:layout_constraintEnd_toStartOf="@+id/btnNextSong"
                 app:layout_constraintStart_toEndOf="@+id/btnPrevSong"
-                app:layout_constraintTop_toTopOf="@+id/guideline2" />
+                app:layout_constraintTop_toTopOf="@+id/guideline2"
+                />
 
             <Button
                 android:id="@+id/btnShufflePlay"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/shuffleplay_icon"
                 app:layout_constraintEnd_toStartOf="@+id/btnPrevSong"
@@ -243,24 +246,24 @@
 
             <Button
                 android:id="@+id/btnPrevSong"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/previoussong_icon"
+                android:background="@drawable/previousbtn"
                 app:layout_constraintEnd_toStartOf="@+id/btnPlayPauseBigCard"
                 app:layout_constraintStart_toEndOf="@+id/btnShufflePlay"
                 app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
             <Button
                 android:id="@+id/btnNextSong"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/nextsong_icon"
+                android:background="@drawable/nextbtn"
                 app:layout_constraintEnd_toStartOf="@+id/btnReplay"
                 app:layout_constraintStart_toEndOf="@+id/btnPlayPauseBigCard"
                 app:layout_constraintTop_toTopOf="@+id/guideline2" />
@@ -269,7 +272,7 @@
                 android:id="@+id/btnReplay"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/replaysong_icon"
                 app:layout_constraintEnd_toEndOf="parent"
