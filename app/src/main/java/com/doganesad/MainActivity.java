@@ -3,6 +3,7 @@ package com.doganesad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
@@ -52,16 +53,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        frameLayout = findViewById(R.id.myFrameLay);
+//        int SPLASH_TIME_OUT = 3;
+//         new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                bottomNavigationView.setVisibility(View.GONE);
+//                manager = getSupportFragmentManager();
+//                manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//                manager.beginTransaction()
+//                        .replace(R.id.myFrameLay, new loading(), loading.TAG)
+//                        .addToBackStack(null)
+//                        .commit();
+//
+//
+//            }
+//        }, 3);
+
+
+
+
         // go to hame fragment when its first time opened
         goHome();
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         littleCard = findViewById(R.id.littleCard);
         bigCard = findViewById(R.id.BigCard);
         btndownArrowBigcard =findViewById(R.id.downButtonBigCard);
         btnLittlecardPlayPause=findViewById(R.id.btnPlayPauseLittleCard);
         btnBigCardPlayPause =findViewById(R.id.btnPlayPauseBigCard);
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        frameLayout = findViewById(R.id.myFrameLay);
+
         seekBar = findViewById(R.id.seekBarBigCard);
 
         //inside cards
@@ -310,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
                     musics.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
 
 
+
                 }
 
                 musics.add(new Music("","","","",-1));
@@ -405,9 +429,9 @@ public class MainActivity extends AppCompatActivity {
                     int progress = (int) (((float) currentPos / totalDuration) * 100);
                     seekBar.setProgress(progress);
                 }
-                handler.postDelayed(this, 100);
+                handler.postDelayed(this, 0);
             }
-        }, 100);
+        }, 0);
     }
 
 }

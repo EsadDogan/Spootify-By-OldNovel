@@ -12,6 +12,12 @@
     <color name="mainGreen">#00A817</color>
     <color name="mainBigCard">#060F1F</color>
     <color name="searchbarBarOrOther">#242424</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="spotifyGreen">#00D361</color>
 
 
 </resources>
