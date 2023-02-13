@@ -10,6 +10,11 @@ import com.bumptech.glide.Glide;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,18 +25,22 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public final static String TAG = "main activity";
@@ -39,14 +48,25 @@ public class MainActivity extends AppCompatActivity {
     public BottomNavigationView bottomNavigationView;
     public static  Button btndownArrowBigcard,btnLittlecardPlayPause ;
     public Button btnplayNextSongBC,btnplayPreviousSongBC;
+    public View viewReplay,viewShuffle,btnLike;
     public static Button btnBigCardPlayPause;
+    public static boolean replay = false;
+    public static boolean shuffle = false;
+    public static boolean like = false;
     FragmentManager manager;
     public static ArrayList<Music> musics;
-    public static MediaPlayer mediaPlayer;
+    public static ArrayList<Music> shuffleMusic;
+    public static MediaPlayer mediaPlayer =new MediaPlayer();
     public static TextView txtSongNameLittleCard,txtSongNameBigCard,txtArtistNameLittleCard,txtArtistNameBigCard;
     public static ImageView imageViewBC,imageViewLC;
     public static FrameLayout frameLayout;
     public static SeekBar seekBar;
+    public static TextView textClock;
+    static Context context;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        context = MainActivity.this;
         frameLayout = findViewById(R.id.myFrameLay);
 //        int SPLASH_TIME_OUT = 3;
 //         new Handler().postDelayed(new Runnable() {
@@ -84,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
         btndownArrowBigcard =findViewById(R.id.downButtonBigCard);
         btnLittlecardPlayPause=findViewById(R.id.btnPlayPauseLittleCard);
         btnBigCardPlayPause =findViewById(R.id.btnPlayPauseBigCard);
+        btnLike = findViewById(R.id.btnLikeBigCard);
+        viewReplay = findViewById(R.id.btnReplay);
+        viewShuffle = findViewById(R.id.btnShufflePlay);
 
         seekBar = findViewById(R.id.seekBarBigCard);
 
@@ -96,9 +120,13 @@ public class MainActivity extends AppCompatActivity {
         imageViewLC = findViewById(R.id.imageViewLittleCard);
         btnplayNextSongBC = findViewById(R.id.btnNextSong);
         btnplayPreviousSongBC = findViewById(R.id.btnPrevSong);
+        textClock = findViewById(R.id.textclock);
+
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
 
         musics = new ArrayList<>();
+        shuffleMusic = new ArrayList<>();
 
 
         try {
@@ -113,20 +141,66 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         btnLittlecardPlayPause.setOnClickListener(view -> playPause());
 
         btnBigCardPlayPause.setOnClickListener(view -> playPause());
 
+
+
+
+        viewReplay.setOnClickListener(view -> {
+            if (!replay){
+                viewReplay.setBackgroundResource(R.drawable.replay);
+                replay = true;
+            }
+            else if (replay){
+                viewReplay.setBackgroundResource(R.drawable.replaywhite);
+                replay =false;
+            }
+        });
+
+        viewShuffle.setOnClickListener(view -> {
+            if (!shuffle){
+                viewShuffle.setBackgroundResource(R.drawable.shufflegreen);
+                shuffle = true;
+            }
+            else if (shuffle){
+                viewShuffle.setBackgroundResource(R.drawable.shufflewhite);
+                shuffle =false;
+            }
+        });
+
+        btnLike.setOnClickListener(view -> {
+            if (like){
+                btnLike.setBackgroundResource(R.drawable.like_icon);
+                like = false;
+            }else {
+                btnLike.setBackgroundResource(R.drawable.likeicongreen);
+                like = true;
+            }
+        });
 
         // TODO: 3.02.2023 make revision for this part
         
         btnplayNextSongBC.setOnClickListener(view -> {
 
             try {
-                playNextSong(musics.get(SongRecylerviewAdapter.currentMusicPosition + 1));
-                if (SongRecylerviewAdapter.currentMusicPosition < musics.size() -3 ) {
-                    SongRecylerviewAdapter.currentMusicPosition += 1;
+                if (!shuffle){
+                    playNextSong(musics.get(SongRecylerviewAdapter.currentMusicPosition + 1));
+                    if (SongRecylerviewAdapter.currentMusicPosition < musics.size() -3 ) {
+                        SongRecylerviewAdapter.currentMusicPosition += 1;
+                    }
+                }else {
+                    playshuffle();
                 }
+
+                //diactivation of replay
+                viewReplay.setBackgroundResource(R.drawable.replaywhite);
+                replay =false;
+
+
             } catch (Exception e) {
                 Log.d(TAG, "onCreate: error probably out of bound" + e.getMessage());
                }
@@ -136,10 +210,20 @@ public class MainActivity extends AppCompatActivity {
         btnplayPreviousSongBC.setOnClickListener(view -> {
 
             try {
-                playPreviousSong(musics.get(SongRecylerviewAdapter.currentMusicPosition-1));
-                if (SongRecylerviewAdapter.currentMusicPosition > 0) {
-                    SongRecylerviewAdapter.currentMusicPosition -= 1;
+                if (!shuffle){
+                    playPreviousSong(musics.get(SongRecylerviewAdapter.currentMusicPosition-1));
+                    if (SongRecylerviewAdapter.currentMusicPosition > 0) {
+                        SongRecylerviewAdapter.currentMusicPosition -= 1;
+                    }
+                }else {
+                    playshuffle();
                 }
+
+                //diactivation of replay
+                viewReplay.setBackgroundResource(R.drawable.replaywhite);
+                replay =false;
+
+
             }catch (Exception e){
                 Log.d(TAG, "onCreate: error probably out of bound " + e.getMessage());
             }
@@ -147,16 +231,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // TODO: 3.02.2023 enable repeat button
+        // TODO: 12.02.2023 add repeat part
 
-//        if (mediaPlayer != null) {
-//            mediaPlayer.setOnCompletionListener(mediaPlayer -> {
-//
-//                if (SongRecylerviewAdapter.nextMusic != null) {
-//                    playNextSong(SongRecylerviewAdapter.nextMusic);
-//                }
-//
-//            });
-//        }
+
+
+
+
+
+
 
 
         littleCard.setOnClickListener(view -> {
@@ -298,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(frameLayout).load(music.getcoverUrl()).into(imageViewLC);
 
 
+
             //Big Card
             txtSongNameBigCard.setText(music.getSongName());
             txtArtistNameBigCard.setText(music.getArtistName());
@@ -331,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "getDataFromFirebase: "+ musicId);
 
                     musics.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
-
+                    shuffleMusic.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
 
 
                 }
@@ -356,15 +439,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if (music.getMusicId() > 0)
                 {
-                    MainActivity.mediaPlayer.reset();
-                    MainActivity.mediaPlayer.release();
-                    MainActivity.mediaPlayer = null;
 
-                    mediaPlayer = MediaPlayer.create(this, Uri.parse(music.getMusicUrl()));
-                    mediaPlayer.start();
-                    setCards(music);
-                    littleCard.setVisibility(View.VISIBLE);
-                    updateSeekBar();
+                        MainActivity.mediaPlayer.reset();
+                        MainActivity.mediaPlayer.release();
+                        MainActivity.mediaPlayer = null;
+
+                        mediaPlayer = MediaPlayer.create(this, Uri.parse(music.getMusicUrl()));
+                        mediaPlayer.start();
+                        setCards(music);
+                        littleCard.setVisibility(View.VISIBLE);
+                        updateSeekBar(mediaPlayer);
+
 
                 }else {
                     // TODO: 3.02.2023 show snackbar
@@ -389,16 +474,15 @@ public class MainActivity extends AppCompatActivity {
                 if (music.getMusicId() >0){
 
                 try {
+                        MainActivity.mediaPlayer.reset();
+                        MainActivity.mediaPlayer.release();
+                        MainActivity.mediaPlayer = null;
 
-                    MainActivity.mediaPlayer.reset();
-                    MainActivity.mediaPlayer.release();
-                    MainActivity.mediaPlayer = null;
-
-                    mediaPlayer = MediaPlayer.create(this, Uri.parse(music.getMusicUrl()));
-                    mediaPlayer.start();
-                    setCards(music);
-                    littleCard.setVisibility(View.VISIBLE);
-                    updateSeekBar();
+                        mediaPlayer = MediaPlayer.create(this, Uri.parse(music.getMusicUrl()));
+                        mediaPlayer.start();
+                        setCards(music);
+                        littleCard.setVisibility(View.VISIBLE);
+                        updateSeekBar(mediaPlayer);
 
                 }catch (Exception e){
                     Log.d(TAG, "playNextSong: error" + e.getMessage());
@@ -418,20 +502,141 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public static void updateSeekBar() {
+    public static void updateSeekBar(MediaPlayer mediaPlayer1) {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mediaPlayer.isPlaying()) {
-                    int currentPos = mediaPlayer.getCurrentPosition();
-                    int totalDuration = mediaPlayer.getDuration();
-                    int progress = (int) (((float) currentPos / totalDuration) * 100);
-                    seekBar.setProgress(progress);
+                try {
+                    if (mediaPlayer1!= null){
+                        if (mediaPlayer1.isPlaying()) {
+                            int currentPos = mediaPlayer1.getCurrentPosition();
+                            int totalDuration = mediaPlayer1.getDuration();
+                            int totalDurationSecond = totalDuration / 1000;
+                            int totalDurationMinute = totalDuration / 60000;
+
+                            int durationMinutes = currentPos / 60000;
+                            int durationInSeconds = currentPos / 1000;
+                            int progress = (int) (((float) currentPos / totalDuration) * 100);
+                            seekBar.setProgress(progress);
+
+                            if (durationInSeconds >= 60 ){
+                                durationInSeconds = currentPos/1000 - durationMinutes*60;
+                            }
+                            if(durationInSeconds < 10){
+                                textClock.setText(durationMinutes+":0"+durationInSeconds);
+                            }else {
+                                textClock.setText(durationMinutes+":"+durationInSeconds);
+                            }
+                        }
+
+                        MainActivity.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+
+                                if (!replay){
+
+                                    if (musics.get(SongRecylerviewAdapter.currentMusicPosition+1).getMusicId()>0){
+                                        try {
+                                            MainActivity.mediaPlayer.reset();
+                                            MainActivity.mediaPlayer.release();
+                                            MainActivity.mediaPlayer = null;
+
+                                            MainActivity.setCards(musics.get((SongRecylerviewAdapter.currentMusicPosition+1)));
+                                            MainActivity.mediaPlayer = MediaPlayer.create(context, Uri.parse(musics.get(SongRecylerviewAdapter.currentMusicPosition+1).getMusicUrl()));
+                                            MainActivity.mediaPlayer.start();
+                                            MainActivity.updateSeekBar(MainActivity.mediaPlayer);
+                                            SongRecylerviewAdapter.currentMusicPosition+=1;
+
+                                        }catch (Exception e){
+                                            Log.d(TAG, "onCompletion: error "+e.getMessage());
+                                        }
+                                    }else {
+                                        btnBigCardPlayPause.setBackgroundResource(R.drawable.playcirclebtn);
+                                        btnLittlecardPlayPause.setBackgroundResource(R.drawable.playarrowbtn);
+                                    }
+
+                                }
+                                if (replay){
+
+                                    //MainActivity.mediaPlayer = MediaPlayer.create(context, Uri.parse(musics.get(SongRecylerviewAdapter.currentMusicPosition).getMusicUrl()));
+                                    MainActivity.mediaPlayer.start();
+                                    MainActivity.updateSeekBar(MainActivity.mediaPlayer);
+                                }
+
+                                else if (shuffle){
+
+                                    playshuffle();
+
+                                }
+
+
+                            }
+                        });
+
+                    }
+                }catch (Exception e){
+                   // Log.d(TAG, "run: error "+e.getMessage());
                 }
-                handler.postDelayed(this, 0);
+
+                handler.postDelayed(this, 10);
             }
-        }, 0);
+        }, 10);
+    }
+
+
+
+
+    public static void showMustGoOn(String url){
+
+
+
+
+        if (MainActivity.mediaPlayer == null){
+
+            MainActivity.mediaPlayer = MediaPlayer.create(context, Uri.parse(url));
+            MainActivity.mediaPlayer.start();
+            MainActivity.littleCard.setVisibility(View.VISIBLE);
+        }
+        else {
+
+            try {
+                MainActivity.mediaPlayer.reset();
+                MainActivity.mediaPlayer.release();
+                MainActivity.mediaPlayer = null;
+
+                MainActivity.mediaPlayer = MediaPlayer.create(context, Uri.parse(url));
+                MainActivity.mediaPlayer.start();
+                MainActivity.littleCard.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+    }
+
+    public static void playshuffle(){
+
+
+
+        Random random = new Random();
+        int shuffleNumber = random.nextInt(shuffleMusic.size());
+
+
+            MainActivity.mediaPlayer.reset();
+            MainActivity.mediaPlayer.release();
+            MainActivity.mediaPlayer = null;
+
+            MainActivity.setCards(musics.get(shuffleNumber));
+            MainActivity.mediaPlayer = MediaPlayer.create(context, Uri.parse(shuffleMusic.get(shuffleNumber).getMusicUrl()));
+            MainActivity.mediaPlayer.start();
+            MainActivity.updateSeekBar(MainActivity.mediaPlayer);
+            SongRecylerviewAdapter.currentMusicPosition=shuffleNumber;
+
+
+
     }
 
 }

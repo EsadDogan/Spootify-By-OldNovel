@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -69,10 +70,10 @@ public class SongRecylerviewAdapter extends RecyclerView.Adapter<SongRecylerview
             public void onClick(View view) {
 
                 try {
-                    showMustGoOn(music.get(holder.getAdapterPosition()).getMusicUrl());
+                    MainActivity.showMustGoOn(music.get(holder.getAdapterPosition()).getMusicUrl());
                     MainActivity.setCards(music.get(holder.getAdapterPosition()));
                     currentMusicPosition = holder.getAdapterPosition();
-                    MainActivity.updateSeekBar();
+                    MainActivity.updateSeekBar(MainActivity.mediaPlayer);
                     // Glide.with(view).load(music.get(holder.getAdapterPosition()).getcoverUrl()).into(MainActivity.imageViewBC);
                     // Glide.with(view).load(music.get(holder.getAdapterPosition()).getcoverUrl()).into(MainActivity.imageViewLC);
                    // holder.txtSongName.setTextColor(Color.GREEN);
@@ -128,34 +129,7 @@ public class SongRecylerviewAdapter extends RecyclerView.Adapter<SongRecylerview
     }
 
 
-    public void showMustGoOn(String url){
 
-
-
-
-        if (MainActivity.mediaPlayer == null){
-
-            MainActivity.mediaPlayer = MediaPlayer.create(context, Uri.parse(url));
-            MainActivity.mediaPlayer.start();
-            MainActivity.littleCard.setVisibility(View.VISIBLE);
-        }
-        else {
-
-            try {
-                MainActivity.mediaPlayer.reset();
-                MainActivity.mediaPlayer.release();
-                MainActivity.mediaPlayer = null;
-
-                MainActivity.mediaPlayer = MediaPlayer.create(context, Uri.parse(url));
-                MainActivity.mediaPlayer.start();
-                MainActivity.littleCard.setVisibility(View.VISIBLE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
 
 //    public static void updateMusicStatus(ArrayList<Music> musics,Music newCurrentMusic){
 //

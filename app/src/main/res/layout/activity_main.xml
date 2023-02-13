@@ -128,7 +128,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="28dp"
                 android:background="@drawable/pagedown_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -137,7 +137,7 @@
                 android:id="@+id/txtSongFromWhereBigCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="28dp"
                 android:text="Liked Songs"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -145,39 +145,43 @@
                 app:layout_constraintStart_toEndOf="@+id/downButtonBigCard"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageViewBigCard"
-                android:layout_width="340dp"
-                android:layout_height="340dp"
+                android:layout_width="351dp"
+                android:layout_height="351dp"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_launcher_background"
                 app:layout_constraintBottom_toTopOf="@+id/txtSongNameBigCard"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSongFromWhereBigCard" />
+                app:layout_constraintTop_toBottomOf="@+id/txtSongFromWhereBigCard"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/txtSongNameBigCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="4dp"
                 android:text="Song Name"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toTopOf="@+id/txtArtistNameBigCard"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.041"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
+            <View
                 android:id="@+id/btnLikeBigCard"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/like_icon"
+                android:backgroundTint="@color/spotifyGreen"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.989"
+                app:layout_constraintHorizontal_bias="0.984"
                 app:layout_constraintStart_toEndOf="@+id/txtSongNameBigCard"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewBigCard" />
 
@@ -185,8 +189,8 @@
                 android:id="@+id/txtArtistNameBigCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="4dp"
                 android:text="Artist Name"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -199,33 +203,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="541dp" />
+                app:layout_constraintGuide_begin="501dp" />
 
             <SeekBar
                 android:id="@+id/seekBarBigCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+
+            <TextView
+                android:id="@+id/textclock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="2:00"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.011"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekBarBigCard" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="591dp" />
+                app:layout_constraintGuide_begin="550dp" />
 
             <Button
                 android:id="@+id/btnPlayPauseBigCard"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/circlepausebutton"
                 app:layout_constraintEnd_toStartOf="@+id/btnNextSong"
@@ -233,13 +250,13 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline2"
                 />
 
-            <Button
+            <View
                 android:id="@+id/btnShufflePlay"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/shuffleplay_icon"
+                android:background="@drawable/shufflewhite"
                 app:layout_constraintEnd_toStartOf="@+id/btnPrevSong"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline2" />
@@ -249,7 +266,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/previousbtn"
                 app:layout_constraintEnd_toStartOf="@+id/btnPlayPauseBigCard"
@@ -261,22 +278,26 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/nextbtn"
                 app:layout_constraintEnd_toStartOf="@+id/btnReplay"
                 app:layout_constraintStart_toEndOf="@+id/btnPlayPauseBigCard"
                 app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
-            <Button
+            <View
                 android:id="@+id/btnReplay"
+                style="@style/MaterialAlertDialog.Material3.Title.Icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/replaysong_icon"
+                app:backgroundTint="@color/white"
+                android:background="@drawable/replaywhite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+
 
             <Button
                 android:layout_width="20dp"
@@ -284,20 +305,24 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/otherdevices_icon"
-                app:layout_constraintBottom_toTopOf="@+id/guideline3"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnShare"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintHorizontal_bias="0.021"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnShufflePlay"
+                app:layout_constraintVertical_bias="0.28" />
 
             <Button
                 android:id="@+id/btnShare"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/share_icon"
-                app:layout_constraintBottom_toTopOf="@+id/guideline3"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddQueue" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddQueue"
+                app:layout_constraintTop_toBottomOf="@+id/btnNextSong"
+                app:layout_constraintVertical_bias="0.246" />
 
             <Button
                 android:id="@+id/btnAddQueue"
@@ -306,15 +331,10 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/addtoqueue_icon"
-                app:layout_constraintBottom_toTopOf="@+id/guideline3"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="740dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnReplay"
+                app:layout_constraintVertical_bias="0.28" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
