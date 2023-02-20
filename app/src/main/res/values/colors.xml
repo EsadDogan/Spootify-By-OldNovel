@@ -8,9 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bottomNavigation">#D0141313</color>
-    <color name="mainLittleCard">#400F0F</color>
+    <color name="mainLittleCard">#430000</color>
     <color name="mainGreen">#00A817</color>
-    <color name="mainBigCard">#AE0038</color>
+    <color name="mainBigCard">#6F3C00</color>
     <color name="searchbarBarOrOther">#242424</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>

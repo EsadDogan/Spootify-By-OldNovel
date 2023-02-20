@@ -579,9 +579,9 @@ public class MainActivity extends AppCompatActivity {
                    // Log.d(TAG, "run: error "+e.getMessage());
                 }
 
-                handler.postDelayed(this, 10);
+                handler.postDelayed(this, 1000);
             }
-        }, 10);
+        }, 1000);
     }
 
 
