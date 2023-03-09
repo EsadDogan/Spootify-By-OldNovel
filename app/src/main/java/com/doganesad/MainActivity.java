@@ -746,8 +746,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
-        goHome();
+//        super.onBackPressed();
+//
+//        goHome();
     }
 }
