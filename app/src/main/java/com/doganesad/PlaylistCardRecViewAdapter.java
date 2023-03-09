@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +26,7 @@ public class PlaylistCardRecViewAdapter extends RecyclerView.Adapter<PlaylistCar
     public final static String TAG = "adapterPllaylistCard";
     Context context;
     ArrayList<Playlists> playlists;
+    public static Playlists playlistID;
 
     public PlaylistCardRecViewAdapter(Context context, ArrayList<Playlists> playlists) {
         this.context = context;
@@ -60,6 +65,21 @@ public class PlaylistCardRecViewAdapter extends RecyclerView.Adapter<PlaylistCar
             Log.d(TAG, "onBindViewHolder: Error"+e.getMessage());
         }
 
+
+        holder.parent.setOnClickListener(view -> {
+
+            playlistID = playlists.get(position);
+
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+
+            FragmentManager manager = activity.getSupportFragmentManager();
+            manager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            manager.beginTransaction().replace(R.id.myFrameLay,new PlaylistFragment(),PlaylistFragment.TAG).addToBackStack(null).commit();
+
+
+        });
+
     }
 
 
@@ -68,11 +88,13 @@ public class PlaylistCardRecViewAdapter extends RecyclerView.Adapter<PlaylistCar
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         private final ShapeableImageView imageView;
         private final TextView textView;
+        private final ConstraintLayout parent;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.cardRecyViewimageView);
             textView = itemView.findViewById(R.id.cardRecyText);
+            parent= itemView.findViewById(R.id.parentrecviewplaylist);
 
 
         }

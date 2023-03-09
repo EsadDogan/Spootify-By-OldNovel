@@ -11,6 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/progressbarMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/loading"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/littleCard"
         android:layout_width="match_parent"
@@ -109,7 +119,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottommenu"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/BigCard"
@@ -287,7 +297,6 @@
 
             <View
                 android:id="@+id/btnReplay"
-                style="@style/MaterialAlertDialog.Material3.Title.Icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="50dp"

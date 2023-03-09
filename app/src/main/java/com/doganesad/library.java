@@ -84,7 +84,7 @@ public class library extends Fragment {
 
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        adapterYourLibrary = new PlaylistCardRecViewAdapter(getContext(),playlistYourLibrary);
+        adapterYourLibrary = new PlaylistCardRecViewAdapter(getContext(),MainActivity.playlists);
         recyclerView.setAdapter(adapterYourLibrary);
 
 
@@ -92,18 +92,18 @@ public class library extends Fragment {
 
     private void insertCardDatas(){
 
-        playlistYourLibrary.add(new Playlists("Liked Songs","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_liked_songs.png?alt=media&token=02ce5b62-2224-4413-99b9-b09415118ba4"));
-        playlistYourLibrary.add(new Playlists("This is Yüzyüzeyken Konuşuruz","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_yyk2.jpg?alt=media&token=0c39f556-b296-43db-b035-4da7d5a736c3"));
-        playlistYourLibrary.add(new Playlists("Viral Hits","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_viralhits.jpeg?alt=media&token=0cc0829d-08ea-4e7e-b800-75914ebffc5d"));
-        playlistYourLibrary.add(new Playlists("All Out 10's","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylists_allout10s.jpg?alt=media&token=e2085b56-5b21-4bed-b034-784bddab3d5d"));
-        playlistYourLibrary.add(new Playlists("Pop Sauce","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_popsouce.jpeg?alt=media&token=5c9ba958-bd00-45fe-9635-8901c99c0a69"));
-        playlistYourLibrary.add(new Playlists("Üçüncü Yeniler","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_ucuncuyeniler.jpeg?alt=media&token=dacdeb16-c23d-461c-b25d-d8e4f6d1a6ce"));
-        playlistYourLibrary.add(new Playlists("Akustik Kuşağı","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_akustikkusagi.jpeg?alt=media&token=015b0fd8-c7f7-4ddd-8d51-2dc0456a8d67"));
-        playlistYourLibrary.add(new Playlists("This is Sezen Aksu","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_thisis_sezenaksu.jpg?alt=media&token=bf352d63-e6b6-434a-80a2-2270589d3aa0"));
-        playlistYourLibrary.add(new Playlists("This is Madrigal","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_thisis_madrigal.jpg?alt=media&token=6d6cd41b-cfce-4e61-a91b-445b9913a064"));
-        playlistYourLibrary.add(new Playlists("This is Dua Lipa","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_thisis_dualipa.jpeg?alt=media&token=8acca474-db2a-477e-9867-0836b20d717c"));
-        playlistYourLibrary.add(new Playlists("Time Capsule","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_time_capsule.jpg?alt=media&token=1207c6ac-06b5-467d-9241-1e741375461a"));
-        playlistYourLibrary.add(new Playlists("Repeat Rewind","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_repeat_rewind.jpg?alt=media&token=585aad9f-a18a-4fe7-ab47-c840dbc42ded"));
+//        playlistYourLibrary.add(new Playlists("Liked Songs","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_liked_songs.png?alt=media&token=02ce5b62-2224-4413-99b9-b09415118ba4"));
+//        playlistYourLibrary.add(new Playlists("This is Yüzyüzeyken Konuşuruz","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_yyk2.jpg?alt=media&token=0c39f556-b296-43db-b035-4da7d5a736c3"));
+//        playlistYourLibrary.add(new Playlists("Viral Hits","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_viralhits.jpeg?alt=media&token=0cc0829d-08ea-4e7e-b800-75914ebffc5d"));
+//        playlistYourLibrary.add(new Playlists("All Out 10's","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylists_allout10s.jpg?alt=media&token=e2085b56-5b21-4bed-b034-784bddab3d5d"));
+//        playlistYourLibrary.add(new Playlists("Pop Sauce","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_popsouce.jpeg?alt=media&token=5c9ba958-bd00-45fe-9635-8901c99c0a69"));
+//        playlistYourLibrary.add(new Playlists("Üçüncü Yeniler","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_ucuncuyeniler.jpeg?alt=media&token=dacdeb16-c23d-461c-b25d-d8e4f6d1a6ce"));
+//        playlistYourLibrary.add(new Playlists("Akustik Kuşağı","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_akustikkusagi.jpeg?alt=media&token=015b0fd8-c7f7-4ddd-8d51-2dc0456a8d67"));
+//        playlistYourLibrary.add(new Playlists("This is Sezen Aksu","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_thisis_sezenaksu.jpg?alt=media&token=bf352d63-e6b6-434a-80a2-2270589d3aa0"));
+//        playlistYourLibrary.add(new Playlists("This is Madrigal","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_thisis_madrigal.jpg?alt=media&token=6d6cd41b-cfce-4e61-a91b-445b9913a064"));
+//        playlistYourLibrary.add(new Playlists("This is Dua Lipa","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_thisis_dualipa.jpeg?alt=media&token=8acca474-db2a-477e-9867-0836b20d717c"));
+//        playlistYourLibrary.add(new Playlists("Time Capsule","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_time_capsule.jpg?alt=media&token=1207c6ac-06b5-467d-9241-1e741375461a"));
+//        playlistYourLibrary.add(new Playlists("Repeat Rewind","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_repeat_rewind.jpg?alt=media&token=585aad9f-a18a-4fe7-ab47-c840dbc42ded"));
 
 
 
