@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -17,10 +18,13 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -42,8 +46,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -58,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean replay = false;
     public static boolean shuffle = false;
     public static boolean like = false;
+    public static boolean isDataDownloaded = false;
     FragmentManager manager;
     public static ArrayList<Music> musics;
     public static ArrayList<Music> shuffleMusic;
@@ -77,13 +85,24 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Playlists> playlistsSpotifyPlaylists;
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        manager = getSupportFragmentManager();
+        manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        manager.beginTransaction()
+                .replace(R.id.myFrameLay, new loading(), loading.TAG)
+                .addToBackStack(null)
+                .commit();
+
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -111,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
         // go to hame fragment when its first time opened
         playlists = new ArrayList<>();
-        getPlaylistFromDatabase();
+
+
 
 
 
@@ -146,12 +166,29 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
         musics = new ArrayList<>();
         shuffleMusic = new ArrayList<>();
 
 
         try {
+            getPlaylistFromDatabase();
             getDataFromFirebase();
+
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.myFrameLay, new home())
+                            .commitAllowingStateLoss();
+
+
+                }
+            };
+            timer.schedule(timerTask,2000);
 
         }catch (Exception e){
             Log.d(TAG, "onCreate: error" + e.getMessage());
@@ -332,9 +369,14 @@ public class MainActivity extends AppCompatActivity {
                 // Do nothing
             }
         });
+
+
+
+
     }
 
     private  void goHome(){
+
 
         manager = getSupportFragmentManager();
         manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -437,23 +479,26 @@ public class MainActivity extends AppCompatActivity {
 
                     playlists.add(new Playlists(playlistName,coverURL,playlistID,recViewID));
 
-
                 }
                 Log.d(TAG, "onSuccess: veri geldi");
-                progressBar.setVisibility(View.GONE);
-                bottomNavigationView.setVisibility(View.VISIBLE);
+
 
                 insertCardDatas();
-                goHome();
+                isDataDownloaded = true;
+                bottomNavigationView.setVisibility(View.VISIBLE);
+
 
             }else {
                 Log.d(TAG, "Error getting documents: ", task.getException());
             }
+
+
         });
+
 
     }
 
-    public static void insertCardDatas(){
+    public void insertCardDatas(){
 
 
 
@@ -468,6 +513,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
+
+
+
+
+        //**MANUAL TESTING**
 
 //        // Unicly yours recyclerview
 //        playlistsUniclyYours.add(new Playlists("Liked Songs","https://firebasestorage.googleapis.com/v0/b/spootify-by-oldnovel.appspot.com/o/playlists%2Fplaylist_liked_songs.png?alt=media&token=02ce5b62-2224-4413-99b9-b09415118ba4"));
@@ -744,10 +795,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
-//
-//        goHome();
-    }
+
 }

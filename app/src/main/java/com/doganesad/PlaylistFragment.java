@@ -105,6 +105,9 @@ public class PlaylistFragment extends Fragment {
         getDataFromFirebase();
         getReadyPage();
 
+        recyclerView.setOnClickListener(view12 -> {
+            MainActivity.musics.equals(musicArrayList);
+        });
 
 
         btnBack.setOnClickListener(view1 -> {
@@ -134,18 +137,37 @@ public class PlaylistFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("Playlists").document(PlaylistCardRecViewAdapter.playlistID.getPlaylistID()).collection("songs").get().addOnCompleteListener(task -> {
+        db.collection("Playlists").document(PlaylistCardRecViewAdapter.playlistID.getPlaylistID()).collection("Songs").get().addOnCompleteListener(task -> {
 
             if (task.isSuccessful()){
                 for (QueryDocumentSnapshot dc: task.getResult() ) {
 
                     String songName = dc.getString("songName");
                     String artistName = dc.getString("artistName");
-                    String coverUrl = dc.getString("coverURL");
-                    String songUrl = dc.getString("songURL");
+                    String coverUrl = dc.getString("coverUrl");
+                    String songUrl = dc.getString("songUrl");
                     int musicId = Integer.parseInt(dc.getId());
                     Log.d(TAG, "getDataFromFirebase: "+ musicId);
 
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
+                    musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
                     musicArrayList.add(new Music(songName,artistName,songUrl,coverUrl,musicId));
                     Log.d(TAG, "getDataFromFirebase: songsuccess"+musicArrayList.get(0).getSongName());
 
