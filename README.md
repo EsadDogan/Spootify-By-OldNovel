@@ -9,6 +9,7 @@ Features:
 This is beta version of The app.
 
 ** THIS APPLICATION IS STRICTLY NON-COMMERCIAL ** 
+** All Rights Reserved. OldNovel-Esad Dogan
 
 ![Screenshot 2023-03-26 060156](https://user-images.githubusercontent.com/116971695/229025556-6e76ce6f-b6b8-4884-acc9-d46765a4cffe.png)
 ![Screenshot 2023-03-26 060311](https://user-images.githubusercontent.com/116971695/229025560-0031ad85-820a-4bde-b1c7-e81b9a15be76.png)
